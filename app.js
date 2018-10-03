@@ -17,6 +17,7 @@ var roundScore,
 
 var p1 = new player("Player 1");
 var p2 = new player("Player 2");
+var activePlayer = null;
 
 function player(name) {
   var self = this;
@@ -34,10 +35,11 @@ function player(name) {
       diceDOM.src = 'dice-' + dice + '.png';
 
       if (dice !== 1) {
-        self.roundScore += dice;
+        roundScore += dice;
+        console.log(roundScore);
         self.previousScore.push(dice);
-        document.querySelector('#current-' + activePlayer).textContent = self.roundScore;
-        console.log(self.roundScore);
+        console.log(roundScore);
+        document.querySelector('#current-' + activePlayer).textContent = roundScore; // THIS LINE IS ERRORING!
         console.log(self.previousScore);
       } else {
         nextPlayer();
@@ -69,8 +71,10 @@ function player(name) {
   }
 };
 document.querySelector('.btn-new').addEventListener('click', init);
+
 document.querySelector('.btn-roll').addEventListener('click', p1.roll);
 document.querySelector('.btn-hold').addEventListener('click',  p1.hold);
+
 
 function nextPlayer() {
   activePlayer === 1 ?
