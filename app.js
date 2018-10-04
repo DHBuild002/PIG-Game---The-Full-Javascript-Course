@@ -17,7 +17,6 @@ var roundScore,
 
 var p1 = new player("Player 1");
 var p2 = new player("Player 2");
-var activePlayer = null;
 
 function player(name) {
   var self = this;
@@ -31,16 +30,13 @@ function player(name) {
       console.log(dice);
       var diceDOM = document.querySelector('.dice')
       diceDOM.style.display = 'block';
-      console.log(diceDOM)
       diceDOM.src = 'dice-' + dice + '.png';
 
       if (dice !== 1) {
-        roundScore += dice;
-        console.log(roundScore);
+        self.roundScore += dice;
         self.previousScore.push(dice);
-        console.log(roundScore);
-        document.querySelector('#current-' + activePlayer).textContent = roundScore; // THIS LINE IS ERRORING!
-        console.log(self.previousScore);
+        document.querySelector('#current-' + activePlayer).textContent = self.roundScore; // THIS LINE IS ERRORING!
+        console.log(self.roundScore);
       } else {
         nextPlayer();
       }
@@ -55,8 +51,10 @@ function player(name) {
   }
   self.hold = function() {
     if (gamePlaying) {
-      self.roundScore += self.totalScore ;
       document.querySelector('#score-' + activePlayer).textContent = self.roundScore;
+      self.roundScore = 0;
+      document.querySelector('#current-' + activePlayer).textContent = 0;
+
 
       if (self.totalScore >= 50) {
         document.querySelector('#name-' + activePlayer).textContent = 'winner!';
@@ -71,16 +69,29 @@ function player(name) {
   }
 };
 document.querySelector('.btn-new').addEventListener('click', init);
-
-document.querySelector('.btn-roll').addEventListener('click', p1.roll);
-document.querySelector('.btn-hold').addEventListener('click',  p1.hold);
-
+document.querySelector('.btn-roll').addEventListener('click',  function(){
+  if(activePlayer === 2){
+    p2.roll();
+  } else {
+    p1.roll();
+  }
+});
+document.querySelector('.btn-hold').addEventListener('click',  function(){
+  if(activePlayer === 2){
+    p2.hold();
+  } else if(gamePlaying){
+    p1.hold();
+  } else {
+    nextPlayer();
+  }
+} );
 
 function nextPlayer() {
   activePlayer === 1 ?
     activePlayer = 2 :
     activePlayer = 1;
   roundScore = 0;
+  previousScore = [];
 
   document.getElementById('current-' + activePlayer).textContent = '0';
   document.getElementById('current-' + activePlayer).textContent = '0';
