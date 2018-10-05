@@ -17,6 +17,9 @@ var roundScore,
 
 var p1 = new player("Player 1");
 var p2 = new player("Player 2");
+var activePlayer = null;
+
+// CLASS
 
 function player(name) {
   var self = this;
@@ -26,6 +29,7 @@ function player(name) {
   self.roundScore = 0;
   self.roll = function() {
     if (gamePlaying) {
+      init();
       var dice = Math.floor(Math.random() * 6 + 1);
       console.log(dice);
       var diceDOM = document.querySelector('.dice')
@@ -34,8 +38,7 @@ function player(name) {
 
       if (dice !== 1) {
         self.roundScore += dice;
-        self.previousScore.push(dice);
-        document.querySelector('#current-' + activePlayer).textContent = self.roundScore; // THIS LINE IS ERRORING!
+        document.querySelector('#current-' + activePlayer).textContent = self.roundScore;
         console.log(self.roundScore);
       } else {
         nextPlayer();
@@ -51,12 +54,11 @@ function player(name) {
   }
   self.hold = function() {
     if (gamePlaying) {
-      self.previousScore;
-      document.querySelector('#score-' + activePlayer).textContent = self.previousScore.reduce(getSum);
-      self.roundScore = 0;
-      self.previousScore = [];
-      document.querySelector('#current-' + activePlayer).textContent = 0;
-
+    // I need to ensure I am able to add even if no values currently exit in the array
+        document.querySelector('#score-' + activePlayer).textContent = self.previousScore.reduce(getSum);
+        self.roundScore = 0;
+        self.previousScore = [];
+        document.querySelector('#current-' + activePlayer).textContent = 0;
 
       if (self.totalScore >= 50) {
         document.querySelector('#name-' + activePlayer).textContent = 'winner!';
@@ -70,28 +72,22 @@ function player(name) {
     }
   }
 };
+
+
+// EVENTS
+
 document.querySelector('.btn-new').addEventListener('click', init);
-document.querySelector('.btn-roll').addEventListener('click',  function(){
-  if(activePlayer === 2){
-    p2.roll();
-  } else {
-    p1.roll();
-  }
-});
-document.querySelector('.btn-hold').addEventListener('click',  function(){
-  if(activePlayer === 2){
-    p2.hold();
-  } else if(gamePlaying){
-    p1.hold();
-  } else {
-    nextPlayer();
-  }
-} );
+/*
+document.querySelector('.btn-roll').addEventListener('click',  activePlayer.roll());
+document.querySelector('.btn-hold').addEventListener('click',  activatePlayer.hold());
+*/
+
+// FUNCTION
 
 function nextPlayer() {
-  activePlayer === 1 ?
-    activePlayer = 2 :
-    activePlayer = 1;
+  activePlayer === p1 ?
+    activePlayer = p2 :
+    activePlayer = p1;
   self.roundScore = 0;
   self.previousScore = [];
 
@@ -105,14 +101,19 @@ function nextPlayer() {
 
 // Add up all Previous Rolls for a player
 function getSum(total, int){
+  if(int >= 0){
   return total + int;
+  }
 }
 
-
 function init() {
-  activePlayer = 1;
+  activePlayer = p1;
   roundScore = 0;
   gamePlaying = true;
+
+// Put the Event Listeners inside the init. so they only become selectable once the game is Live
+  document.querySelector('.btn-roll').addEventListener('click',  activePlayer.roll());
+  document.querySelector('.btn-hold').addEventListener('click',  activatePlayer.hold());
 
   document.querySelector('.dice').style.display = 'none';
 
