@@ -51,8 +51,10 @@ function player(name) {
   }
   self.hold = function() {
     if (gamePlaying) {
-      document.querySelector('#score-' + activePlayer).textContent = self.roundScore;
+      self.previousScore;
+      document.querySelector('#score-' + activePlayer).textContent = self.previousScore.reduce(getSum);
       self.roundScore = 0;
+      self.previousScore = [];
       document.querySelector('#current-' + activePlayer).textContent = 0;
 
 
@@ -90,8 +92,8 @@ function nextPlayer() {
   activePlayer === 1 ?
     activePlayer = 2 :
     activePlayer = 1;
-  roundScore = 0;
-  previousScore = [];
+  self.roundScore = 0;
+  self.previousScore = [];
 
   document.getElementById('current-' + activePlayer).textContent = '0';
   document.getElementById('current-' + activePlayer).textContent = '0';
@@ -100,6 +102,12 @@ function nextPlayer() {
 
   document.querySelector('.dice').style.display = 'none';
 }
+
+// Add up all Previous Rolls for a player
+function getSum(total, int){
+  return total + int;
+}
+
 
 function init() {
   activePlayer = 1;
