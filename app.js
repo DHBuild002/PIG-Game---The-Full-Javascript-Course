@@ -7,29 +7,29 @@
 - The first player to reach 100 points on GLOBAL score wins the game */
 
 var roundScore,
-  activePlayer,
+  //activePlayer,
   gamePlaying;
 
-  //var playerScores;
+  // var playerScores;
   // playerScores = [0, 0]
+
+var p1 = new player("Player 1", 1);
+var p2 = new player("Player 2", 2);
+var activePlayer = null;
 
   init();
 
-var p1 = new player("Player 1");
-var p2 = new player("Player 2");
-var activePlayer = null;
-
 // CLASS
 
-function player(name) {
+function player(name, id) {
   var self = this;
   self.name = name;
   self.previousScore = [];
   self.totalScore = 0;
   self.roundScore = 0;
+	self.id = id;
   self.roll = function() {
     if (gamePlaying) {
-      init();
       var dice = Math.floor(Math.random() * 6 + 1);
       console.log(dice);
       var diceDOM = document.querySelector('.dice')
@@ -38,7 +38,8 @@ function player(name) {
 
       if (dice !== 1) {
         self.roundScore += dice;
-        document.querySelector('#current-' + activePlayer).textContent = self.roundScore;
+				console.log(self.roundScore);
+        document.querySelector('#current-' + activePlayer.id).textContent = self.roundScore;
         console.log(self.roundScore);
       } else {
         nextPlayer();
@@ -77,12 +78,33 @@ function player(name) {
 // EVENTS
 
 document.querySelector('.btn-new').addEventListener('click', init);
-/*
-document.querySelector('.btn-roll').addEventListener('click',  activePlayer.roll());
-document.querySelector('.btn-hold').addEventListener('click',  activatePlayer.hold());
-*/
+document.querySelector('.btn-roll').addEventListener('click', activePlayer.roll());
+document.querySelector('.btn-hold').addEventListener('click', activePlayer.hold());
 
-// FUNCTION
+// FUNCTIONS
+
+function init() {
+  activePlayer = p1;
+  roundScore = 0;
+  gamePlaying = true;
+
+  document.querySelector('.dice').style.display = 'none';
+
+  document.getElementById('score-1').textContent = '0';
+  document.getElementById('score-2').textContent = '0';
+  document.getElementById('current-1').textContent = '0';
+  document.getElementById('current-2').textContent = '0';
+  document.getElementById('name-1').textContent = 'Player 1';
+  document.getElementById('name-2').textContent = 'Player 2';
+  document.querySelector('.btn-roll').style.display = 'block';
+
+  document.querySelector('.player-1-panel').classList.remove('winner');
+  document.querySelector('.player-2-panel').classList.remove('winner');
+  document.querySelector('.player-1-panel').classList.remove('active');
+  document.querySelector('.player-2-panel').classList.remove('active');
+
+  document.querySelector('.player-1-panel').classList.add('active');
+}
 
 function nextPlayer() {
   activePlayer === p1 ?
@@ -106,35 +128,8 @@ function getSum(total, int){
   }
 }
 
-function init() {
-  activePlayer = p1;
-  roundScore = 0;
-  gamePlaying = true;
-
-// Put the Event Listeners inside the init. so they only become selectable once the game is Live
-  document.querySelector('.btn-roll').addEventListener('click',  activePlayer.roll());
-  document.querySelector('.btn-hold').addEventListener('click',  activatePlayer.hold());
-
-  document.querySelector('.dice').style.display = 'none';
-
-  document.getElementById('score-1').textContent = '0';
-  document.getElementById('score-2').textContent = '0';
-  document.getElementById('current-1').textContent = '0';
-  document.getElementById('current-2').textContent = '0';
-  document.getElementById('name-1').textContent = 'Player 1';
-  document.getElementById('name-2').textContent = 'Player 2';
-  document.querySelector('.btn-roll').style.display = 'block';
-
-  document.querySelector('.player-1-panel').classList.remove('winner');
-  document.querySelector('.player-2-panel').classList.remove('winner');
-  document.querySelector('.player-1-panel').classList.remove('active');
-  document.querySelector('.player-2-panel').classList.remove('active');
-
-  document.querySelector('.player-1-panel').classList.add('active');
-}
 
 // My Attempts
-
 /*
 function checkRepeat(){
 				if(previous.slice(-1)[0] === 6 && previous.slice(-2)[0] === 6){
