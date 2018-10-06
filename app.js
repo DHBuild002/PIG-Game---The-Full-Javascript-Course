@@ -7,11 +7,8 @@
 - The first player to reach 100 points on GLOBAL score wins the game */
 
 var roundScore,
-  //activePlayer,
+  activePlayer,
   gamePlaying;
-
-  // var playerScores;
-  // playerScores = [0, 0]
 
 var p1 = new player("Player 1", 1);
 var p2 = new player("Player 2", 2);
@@ -20,28 +17,27 @@ var activePlayer = null;
   init();
 
 // CLASS
-
 function player(name, id) {
   var self = this;
   self.name = name;
-  self.previousScore = [];
+  self.previousScore = [0];
   self.totalScore = 0;
   self.roundScore = 0;
 	self.id = id;
   self.roll = function() {
     if (gamePlaying) {
       var dice = Math.floor(Math.random() * 6 + 1);
-      console.log(dice);
       var diceDOM = document.querySelector('.dice')
       diceDOM.style.display = 'block';
       diceDOM.src = 'dice-' + dice + '.png';
 
       if (dice !== 1) {
         self.roundScore += dice;
-				console.log(self.roundScore);
-        document.querySelector('#current-' + activePlayer.id).textContent = self.roundScore;
-        console.log(self.roundScore);
+				self.previousScore.push(dice);
+        document.querySelector('#current-' + self.id).textContent = self.roundScore;
       } else {
+				self.roundScore = 0;
+				self.previousScore = [0];
         nextPlayer();
       }
     }
@@ -54,38 +50,45 @@ function player(name, id) {
     }
   }
   self.hold = function() {
+		// When the Hold button is clicked...
+		// check if game is playing
     if (gamePlaying) {
-    // I need to ensure I am able to add even if no values currently exit in the array
-        document.querySelector('#score-' + activePlayer).textContent = self.previousScore.reduce(getSum);
-        self.roundScore = 0;
-        self.previousScore = [];
-        document.querySelector('#current-' + activePlayer).textContent = 0;
+    		//add the roundScore to the currentScore
+				self.totalScore += self.roundScore
+        document.querySelector('#score-' + self.id).textContent = self.totalScore;
+        document.querySelector('#current-' + self.id).textContent = 0;
 
       if (self.totalScore >= 50) {
-        document.querySelector('#name-' + activePlayer).textContent = 'winner!';
+        document.querySelector('#name-' + activePlayer.id).textContent = 'winner!';
         document.querySelector('.dice').style.display = 'none';
-        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
-        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+        document.querySelector('.player-' + activePlayer.id + '-panel').classList.add('winner');
+        document.querySelector('.player-' + activePlayer.id + '-panel').classList.remove('active');
         gamePlaying = false;
       } else {
+				self.roundScore = 0;
+				self.previousScore = [0];
         nextPlayer();
       }
     }
   }
 };
 
-
 // EVENTS
-
 document.querySelector('.btn-new').addEventListener('click', init);
-document.querySelector('.btn-roll').addEventListener('click', activePlayer.roll());
-document.querySelector('.btn-hold').addEventListener('click', activePlayer.hold());
+document.querySelector('.btn-roll').addEventListener('click', function(){
+	if(gamePlaying){
+		activePlayer.roll()
+	}
+});
+document.querySelector('.btn-hold').addEventListener('click', function(){
+	if(gamePlaying){
+		activePlayer.hold()
+	}
+});
 
 // FUNCTIONS
-
 function init() {
   activePlayer = p1;
-  roundScore = 0;
   gamePlaying = true;
 
   document.querySelector('.dice').style.display = 'none';
@@ -105,41 +108,23 @@ function init() {
 
   document.querySelector('.player-1-panel').classList.add('active');
 }
-
 function nextPlayer() {
   activePlayer === p1 ?
     activePlayer = p2 :
     activePlayer = p1;
-  self.roundScore = 0;
-  self.previousScore = [];
 
-  document.getElementById('current-' + activePlayer).textContent = '0';
-  document.getElementById('current-' + activePlayer).textContent = '0';
+  document.getElementById('current-1').textContent = '0';
+  document.getElementById('current-2').textContent = '0';
   document.querySelector('.player-1-panel').classList.toggle('active');
   document.querySelector('.player-2-panel').classList.toggle('active');
 
   document.querySelector('.dice').style.display = 'none';
 }
-
-// Add up all Previous Rolls for a player
 function getSum(total, int){
   if(int >= 0){
   return total + int;
   }
 }
-
-
-// My Attempts
-/*
-function checkRepeat(){
-				if(previous.slice(-1)[0] === 6 && previous.slice(-2)[0] === 6){
-					roundScore = 0;
-					console.log('Duplicate Detected - Player Scrore resetting to 0');
-					nextPlayer();
-				}
-			}
-*/
-
 /* 1. A player loses his ENTIRE score when he rolls two 6 in a row.
 // After that, it's the next player's turn. (Hint: Always
 // save the previous dice roll in a separate variable)
