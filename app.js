@@ -26,7 +26,7 @@ function player(name, id) {
 	self.id = id;
   self.roll = function() {
     if (gamePlaying) {
-      var dice = Math.floor(Math.random() * 6 + 1);
+      var dice = Math.floor(Math.random() * 6) + 1;
       var diceDOM = document.querySelector('.dice')
       diceDOM.style.display = 'block';
       diceDOM.src = 'dice-' + dice + '.png';
@@ -35,7 +35,7 @@ function player(name, id) {
         self.roundScore += dice;
 				self.previousScore.push(dice);
         document.querySelector('#current-' + self.id).textContent = self.roundScore;
-      } else {
+				} else {
 				self.roundScore = 0;
 				self.previousScore = [0];
         nextPlayer();
@@ -43,8 +43,7 @@ function player(name, id) {
     }
   }
   self.resetToZero = function() {
-    if (previousScore.slice(-1)[0] === 6 && previousScore.slice(-2)[0] === 6) {
-      roundScore = 0;
+    if (self.previousScore.slice(-1)[0] === 6 && self.previousScore.slice(-2)[0] === 6) {
       console.log('Duplicate Detected - Player Scrore resetting to 0');
       nextPlayer();
     }
@@ -77,7 +76,8 @@ function player(name, id) {
 document.querySelector('.btn-new').addEventListener('click', init);
 document.querySelector('.btn-roll').addEventListener('click', function(){
 	if(gamePlaying){
-		activePlayer.roll()
+		activePlayer.roll();
+		activePlayer.resetToZero();
 	}
 });
 document.querySelector('.btn-hold').addEventListener('click', function(){
