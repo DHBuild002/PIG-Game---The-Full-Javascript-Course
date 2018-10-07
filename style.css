@@ -138,7 +138,7 @@ i {
 }
 
 .btn-new { top: 45px;}
-.btn-roll { top: 403px; display: none;}
+.btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
 
 .dice {
@@ -148,6 +148,16 @@ i {
     transform: translateX(-50%);
     height: 100px;
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
+}
+
+#score-input{
+  margin: 50px;
+}
+#score-input input {
+    border: 1px solid grey;
+    border-radius: 5px;
+    display: inline;
+    height: 25px;
 }
 
 .winner { background-color: #ffe271; }

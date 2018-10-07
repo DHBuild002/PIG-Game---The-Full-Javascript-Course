@@ -12,6 +12,7 @@
     <body>
 
         <div class="wrapper clearfix">
+          <p class="startMessage"> </p> 
             <div class="player-1-panel active">
                 <div class="player-name" id="name-1">Player 1</div>
                 <div class="player-score" id="score-1">0</div>
@@ -30,17 +31,19 @@
                 </div>
             </div>
 
-						<div><p>Score:</p><p class="limit-integer"> </p></div>
-            <button class="btn-new"><i class="ion-ios-plus-outline"></i>New game</button>
-						<input type="text" class="setScore"><button class="scoreSetter">
-              <i class="ion-ios-download-outline"></i>Set Score</button>
+            <div id="score-input">
+                <p>Score Limit: </p><p id="limit"> </p>
 
+                <input type="number" id="setScore" value="0">
+                <button class="btn-limit"> <i class="ion-ios-settings"></i>Set Score</button>
+            </div>
+            <button class="btn-new"><i class="ion-ios-plus-outline"></i>New game</button>
             <button class="btn-roll"><i class="ion-ios-loop"></i>Roll dice</button>
             <button class="btn-hold"><i class="ion-ios-download-outline"></i>Hold</button>
 
             <img src="dice-5.png" alt="Dice" class="dice">
-        </div>
 
+        </div>
         <script src="app.js"></script>
     </body>
 </html>

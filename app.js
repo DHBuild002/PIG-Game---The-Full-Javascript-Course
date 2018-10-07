@@ -4,19 +4,23 @@
 - In each turn, a player rolls a dice as many times as he whishes. Each result get added to his ROUND score
 - BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn
 - The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
-- The first player to reach 100 points on GLOBAL score wins the game */
+- The first player to reach 100 points on GLOBAL score wins the game
 
+ */
 var roundScore,
-  activePlayer,
-  gamePlaying;
+      activePlayer;
+
+var gamePlaying = false;
 
 var p1 = new player("Player 1", 1);
 var p2 = new player("Player 2", 2);
 var activePlayer = null;
 
-  init();
+// A Blank Slate
+beforeInit();
+//init();
 
-// CLASS
+// CLASSES
 function player(name, id) {
   var self = this;
   self.name = name;
@@ -30,6 +34,7 @@ function player(name, id) {
       var diceDOM = document.querySelector('.dice')
       diceDOM.style.display = 'block';
       diceDOM.src = 'dice-' + dice + '.png';
+      console.log(dice);
 
       if (dice !== 1) {
         self.roundScore += dice;
@@ -49,15 +54,12 @@ function player(name, id) {
     }
   }
   self.hold = function() {
-		// When the Hold button is clicked...
-		// check if game is playing
     if (gamePlaying) {
-    		//add the roundScore to the currentScore
 				self.totalScore += self.roundScore
         document.querySelector('#score-' + self.id).textContent = self.totalScore;
         document.querySelector('#current-' + self.id).textContent = 0;
 
-      if (self.totalScore >= 50) {
+      if (self.totalScore >= setScore.value) {
         document.querySelector('#name-' + activePlayer.id).textContent = 'winner!';
         document.querySelector('.dice').style.display = 'none';
         document.querySelector('.player-' + activePlayer.id + '-panel').classList.add('winner');
@@ -74,6 +76,7 @@ function player(name, id) {
 
 // EVENTS
 document.querySelector('.btn-new').addEventListener('click', init);
+document.querySelector('.btn-limit').addEventListener('click', set);
 document.querySelector('.btn-roll').addEventListener('click', function(){
 	if(gamePlaying){
 		activePlayer.roll();
@@ -87,11 +90,27 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
 });
 
 // FUNCTIONS
+function set() {
+  var setScore = document.getElementById('setScore').value;
+  Number(setScore);
+  document.getElementById('limit').innerHTML = setScore;
+  init();
+}
+function beforeInit(){
+  if(gamePlaying === false){
+
+    document.querySelector('.dice').style.display = 'none';
+    document.getElementById('current-1').textContent = '0';
+    document.querySelector('.player-1-panel').classList.remove('active');
+
+    if(setScore.value === '0'){
+        document.querySelector('.btn-new').style.display = 'none';
+    }
+  }
+}
 function init() {
   activePlayer = p1;
   gamePlaying = true;
-
-  document.querySelector('.dice').style.display = 'none';
 
   document.getElementById('score-1').textContent = '0';
   document.getElementById('score-2').textContent = '0';
@@ -99,12 +118,10 @@ function init() {
   document.getElementById('current-2').textContent = '0';
   document.getElementById('name-1').textContent = 'Player 1';
   document.getElementById('name-2').textContent = 'Player 2';
-  document.querySelector('.btn-roll').style.display = 'block';
+  document.querySelector('.btn-new').style.display = 'block';
 
   document.querySelector('.player-1-panel').classList.remove('winner');
   document.querySelector('.player-2-panel').classList.remove('winner');
-  document.querySelector('.player-1-panel').classList.remove('active');
-  document.querySelector('.player-2-panel').classList.remove('active');
 
   document.querySelector('.player-1-panel').classList.add('active');
 }
@@ -135,6 +152,7 @@ DONE!!!!!
 // predefined score of 100.
 // (Hint: you can read that value with the .value property in JavaScript.
 // This is a good oportunity to use google to figure this out :)
+
 // 3. Add another dice to the game, so that there are two dices now.
 // The player looses his current score when one of them is a 1.
 // (Hint: you will need CSS to position the second dice, so take a look at the CSS code for the first one.)
