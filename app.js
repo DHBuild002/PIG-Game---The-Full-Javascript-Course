@@ -8,7 +8,7 @@
 
  */
 var roundScore,
-      activePlayer;
+    activePlayer;
 
 var gamePlaying = false;
 
@@ -28,6 +28,10 @@ function player(name, id) {
   self.totalScore = 0;
   self.roundScore = 0;
 	self.id = id;
+	self.clearStreak = function() {
+		self.roundScore = 0;
+		self.previousScore = [0];
+	};
   self.roll = function() {
     if (gamePlaying) {
       var dice = Math.floor(Math.random() * 6) + 1;
@@ -39,10 +43,10 @@ function player(name, id) {
       if (dice !== 1) {
         self.roundScore += dice;
 				self.previousScore.push(dice);
+				console.log(self.previousScore);
         document.querySelector('#current-' + self.id).textContent = self.roundScore;
 				} else {
-				self.roundScore = 0;
-				self.previousScore = [0];
+				self.clearStreak();
         nextPlayer();
       }
     }
@@ -50,6 +54,7 @@ function player(name, id) {
   self.resetToZero = function() {
     if (self.previousScore.slice(-1)[0] === 6 && self.previousScore.slice(-2)[0] === 6) {
       console.log('Duplicate Detected - Player Scrore resetting to 0');
+			self.clearStreak();
       nextPlayer();
     }
   }
@@ -64,10 +69,11 @@ function player(name, id) {
         document.querySelector('.dice').style.display = 'none';
         document.querySelector('.player-' + activePlayer.id + '-panel').classList.add('winner');
         document.querySelector('.player-' + activePlayer.id + '-panel').classList.remove('active');
+        document.querySelector('.btn-roll').style.display = 'none';
+        document.querySelector('.btn-hold').style.display = 'none';
         gamePlaying = false;
       } else {
-				self.roundScore = 0;
-				self.previousScore = [0];
+				self.clearStreak();
         nextPlayer();
       }
     }
@@ -100,7 +106,8 @@ function beforeInit(){
   if(gamePlaying === false){
 
     document.querySelector('.dice').style.display = 'none';
-    document.getElementById('current-1').textContent = '0';
+    document.getElementById('current-1').textContent = '-';
+    document.getElementById('current-2').textContent = '-';
     document.querySelector('.player-1-panel').classList.remove('active');
 
     if(setScore.value === '0'){
@@ -122,10 +129,13 @@ function init() {
 
   document.querySelector('.player-1-panel').classList.remove('winner');
   document.querySelector('.player-2-panel').classList.remove('winner');
+	document.querySelector('.btn-roll').style.display = 'block';
+	document.querySelector('.btn-hold').style.display = 'block';
 
   document.querySelector('.player-1-panel').classList.add('active');
 }
 function nextPlayer() {
+
   activePlayer === p1 ?
     activePlayer = p2 :
     activePlayer = p1;
@@ -152,6 +162,7 @@ DONE!!!!!
 // predefined score of 100.
 // (Hint: you can read that value with the .value property in JavaScript.
 // This is a good oportunity to use google to figure this out :)
+// DONE!!!
 
 // 3. Add another dice to the game, so that there are two dices now.
 // The player looses his current score when one of them is a 1.

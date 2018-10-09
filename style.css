@@ -151,7 +151,8 @@ i {
 }
 
 #score-input{
-  margin: 50px;
+  margin: 0px;
+	
 }
 #score-input input {
     border: 1px solid grey;
