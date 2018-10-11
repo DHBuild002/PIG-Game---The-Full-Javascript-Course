@@ -8,7 +8,7 @@
 
  */
 var roundScore,
-    activePlayer;
+      activePlayer;
 
 var gamePlaying = false;
 
@@ -100,6 +100,7 @@ function set() {
   var setScore = document.getElementById('setScore').value;
   Number(setScore);
   document.getElementById('limit').innerHTML = setScore;
+  document.getElementById('setScore').style.display = 'none';
   init();
 }
 function beforeInit(){
