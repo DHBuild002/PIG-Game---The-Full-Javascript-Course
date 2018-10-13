@@ -75,6 +75,7 @@ function player(name, id) {
       if (self.totalScore >= setScore.value) {
         document.querySelector('#name-' + activePlayer.id).textContent = 'winner!';
         document.querySelector('.dice').style.display = 'none';
+        document.querySelector('.dice2').style.display = 'none';
         document.querySelector('.player-' + activePlayer.id + '-panel').classList.add('winner');
         document.querySelector('.player-' + activePlayer.id + '-panel').classList.remove('active');
 				document.querySelector('.btn-reset').style.display = 'block';
@@ -123,8 +124,9 @@ function beforeInit(){
 		document.getElementById('score-2').textContent = '-';
 
 		document.getElementById('score-limit').style.display = 'none';
-		document.getElementById('score-input').style.display = 'none';
 		document.getElementById('player-buttons').style.display = 'none';
+		document.querySelector('.btn-reset').style.display = 'none';
+		document.getElementById('score-input').style.display = 'none';
 
     document.querySelector('.player-1-panel').classList.remove('active');
 
@@ -132,7 +134,6 @@ function beforeInit(){
 function start(){
 	document.getElementById('score-input').style.display = 'block';
 	document.querySelector('.btn-limit').style.display = 'block';
-
 
 	document.querySelector('.btn-reset').style.display = 'none';
 	document.querySelector('.btn-new').style.display = 'none';

@@ -180,8 +180,10 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+#score-limit{
+}
+
 #score-input {
-	display: block;
 	left: 42%;
 	position: inherit;
 	margin-top: 20px;
@@ -198,9 +200,8 @@ input[type=number]::-webkit-outer-spin-button {
 #score-input input {
     border: 1px solid #b9b9b9;
     border-radius: 5px;
-    display: inline;
     height: 30px;
-    padding: 22px;
+    padding: 18px;
 }
 
 button i:hover{
