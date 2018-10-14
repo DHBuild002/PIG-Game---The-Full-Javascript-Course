@@ -44,8 +44,6 @@ function player(name, id) {
       secondaryDi.style.display = 'block';
       primaryDi.src = 'dice-' + randScore + '.png';
       secondaryDi.src = 'dice-' + randScore2 + '.png';
-			console.log(randScore);
-			console.log(randScore2);
 
       if (randScore !== 1 && randScore2 !== 1) {
         self.roundScore += (randScore + randScore2);
@@ -61,7 +59,6 @@ function player(name, id) {
   }
   self.duplicateValues = function() {
     if (self.previousScore.slice(-1)[0] === 6 && self.previousScore.slice(-2)[0] === 6) {
-      console.log('Duplicate Detected - Player Scrore resetting to 0');
 			self.clearStreak();
       nextPlayer();
     }
@@ -192,18 +189,24 @@ function getSum(total, int){
   return total + int;
   }
 }
+
 /* 1. A player loses his ENTIRE score when he rolls two 6 in a row.
 // After that, it's the next player's turn. (Hint: Always
 // save the previous dice roll in a separate variable)
-DONE!!!!!
+
+DONE
 */
 
-// 2. Add an input field to the HTML where players can set the winning score, so that they can change the
-// predefined score of 100.
-// (Hint: you can read that value with the .value property in JavaScript.
+/* 2. Add an input field to the HTML where players can set the winning score, so that they can change the
+// predefined score of 100. (Hint: you can read that value with the .value property in JavaScript.
 // This is a good oportunity to use google to figure this out :)
-// DONE!!!
+ DONE
 
-// 3. Add another dice to the game, so that there are two dices now.
+*/
+
+/* 3. Add another dice to the game, so that there are two dices now.
 // The player loses his current score when one of them is a 1.
 // (Hint: you will need CSS to position the second dice, so take a look at the CSS code for the first one.)
+Done
+
+*/
