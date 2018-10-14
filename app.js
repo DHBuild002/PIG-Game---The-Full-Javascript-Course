@@ -8,15 +8,14 @@
 
  */
 var roundScore,
-      activePlayer;
+    activePlayer;
 
 var gamePlaying = false;
-
 var p1 = new player("Player 1", 1);
 var p2 = new player("Player 2", 2);
 var activePlayer = null;
 
-// A Blank Slate
+// On Page Load - A Blank Slate
 beforeInit();
 
 // CLASS
