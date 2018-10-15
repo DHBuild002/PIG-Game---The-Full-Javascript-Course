@@ -15,14 +15,9 @@ var p1 = new player("Player 1", 1);
 var p2 = new player("Player 2", 2);
 var activePlayer = null;
 
-<<<<<<< HEAD
-// On Page Load - A Blank Slate
-=======
 // On Page Load - A Blank Slate
 
->>>>>>> 5fb1438e9532e4cf5da1b51aadd56cb6b04e1c69
 beforeInit();
-//init();
 
 // CLASSES
 function player(name, id) {
