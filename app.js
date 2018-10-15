@@ -18,8 +18,9 @@ var activePlayer = null;
 <<<<<<< HEAD
 // On Page Load - A Blank Slate
 =======
-//on pageload  A Blank Slate
->>>>>>> master
+// On Page Load - A Blank Slate
+
+>>>>>>> 5fb1438e9532e4cf5da1b51aadd56cb6b04e1c69
 beforeInit();
 //init();
 
