@@ -15,7 +15,11 @@ var p1 = new player("Player 1", 1);
 var p2 = new player("Player 2", 2);
 var activePlayer = null;
 
+<<<<<<< HEAD
 // On Page Load - A Blank Slate
+=======
+//on pageload  A Blank Slate
+>>>>>>> master
 beforeInit();
 //init();
 
