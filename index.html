@@ -12,17 +12,21 @@
     <body>
 
         <div class="wrapper clearfix">
+          
 					<div id="score-input">
 						<div>
 							<p><button class="btn-limit"><i class="ion-ios-settings"></i>Set Score</button></p>
 						</div>
 							<p>Set your Limit: </p>
-							<input type="number" placeholder="Set a Limit" id="setScore" value="0" onblur="if (this.value == '') {this.value = '0';}"
+							<input type="number" id="setScore" value="0" onblur="if (this.value == '') {this.value = '0';}"
 										onfocus="if (this.value == '0') {this.value = '';}">
 					</div>
+
 					<div id="score-limit">
 							<p> Score Limit: </p>
-								<span id="limit"> </span></div>
+								<span id="limit"> </span>
+          </div>
+
             <div class="player-1-panel active">
                 <div class="player-name" id="name-1">Player 1</div>
                 <div class="player-score" id="score-1">0</div>
@@ -48,7 +52,6 @@
 						</div>
             <img src="dice-5.png" alt="Dice" class="dice">
             <img src="dice-5.png" alt="Dice" class="dice2">
-
         </div>
         <script src="app.js"></script>
     </body>
