@@ -18,7 +18,6 @@ var activePlayer = null;
 // On Page Load - A Blank Slate
 
 beforeInit();
-//init();
 
 // CLASSES
 function player(name, id) {
