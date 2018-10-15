@@ -16,6 +16,7 @@ var p2 = new player("Player 2", 2);
 var activePlayer = null;
 
 // On Page Load - A Blank Slate
+  
 beforeInit();
 //init();
 
